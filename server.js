@@ -3,6 +3,7 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
+const colors = require('colors');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
@@ -36,15 +37,15 @@ app.use("/api/users", usersAPI);
 
 app.listen(PORT, (err) => {
     if (err) {
-        console.log('💥  something went wrong 💥');
+        console.log('💥  something went wrong 💥'.red);
     } else {
         mongoose.connect(process.env.MONGODB_URI || db.url, function (error) {
             if (error) {
-                return console.log('💥  the connection broke 💥');
+                return console.log('💥  the connection broke 💥'.red);
             } else {
-                console.log('✨  mongoose connection successful ✨');
+                console.log('✨  mongoose connection successful ✨'.cyan.bold);
             }
         });
-        console.log(`✨  app listening on port ${PORT} ✨`);
+        console.log(`✨  app listening on port ${PORT} ✨`.magenta.bold);
     }
 });
