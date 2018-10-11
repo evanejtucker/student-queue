@@ -17,14 +17,14 @@ users.get('/logout', auth.logoutUser, (req, res, next)=> {
 });
 
 users.post('/login', passport.authenticate('local-login', {
-    successRedirect : '/profile', 
-    failureRedirect : '/login',
+    successRedirect : '/api/users/success', 
+    failureRedirect : '/api/users/failure',
     failureFlash : true
 }));
 
 users.post('/signup', passport.authenticate('local-signup', {
-    successRedirect : '/profile', 
-    failureRedirect : '/login', 
+    successRedirect : '/api/users/success', 
+    failureRedirect : '/api/users/failure', 
     failureFlash : true 
 }));
 
@@ -44,6 +44,14 @@ users.get('/remove/:user', (req, res, next)=> {
 users.post('/login-test', (req, res, next)=> {
     console.log(req.body);
     res.send(req.body);
+});
+
+users.get("/success", (req, res, next)=> {
+    return res.send(true);
+});
+
+users.get("/failure", (req, res, next)=> {
+    return res.send(false);
 });
 
 module.exports = users;
