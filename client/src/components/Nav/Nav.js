@@ -38,11 +38,27 @@ class NavBar extends Component {
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
+                <NavLink href="/queue">Queue</NavLink>
+              </NavItem>
+              <NavItem>
                 <NavLink href="/profile">Profile</NavLink>
               </NavItem>
               <NavItem>
                 <NavLink href="https://github.com/evanejtucker/student-queue">GitHub</NavLink>
               </NavItem>
+              <UncontrolledDropdown nav inNavbar>
+                <DropdownToggle nav caret>
+                <i className="fas fa-user"></i>
+                </DropdownToggle>
+                <DropdownMenu right>
+                  <DropdownItem>
+                    <NavLink id="dropdown-link" href="/login">login</NavLink>
+                  </DropdownItem>
+                  <DropdownItem>
+                    <NavLink id="dropdown-link" href="/signup">signup</NavLink>
+                  </DropdownItem>
+                </DropdownMenu>
+              </UncontrolledDropdown>
             </Nav>
           </Collapse>
         </Navbar>

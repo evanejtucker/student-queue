@@ -26,3 +26,12 @@ a.navbar-brand {
     margin-bottom: 8px;
 }
 
+a#dropdown-link{
+    color: black;
+    font-size: 1.1em;
+}
+
+a#dropdown-link:hover {
+    font-size: 1.3em;
+}
+
