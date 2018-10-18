@@ -1,5 +1,7 @@
 import React, {Component} from "react";
+import Login from "../../components/Login";
 import API from "../../utils/API";
+import { Container, Row, Col } from 'reactstrap';
 
 class SignIn extends Component {
 
@@ -13,17 +15,31 @@ class SignIn extends Component {
 
     componentDidMount() {
         console.log(this.state.action);
-        API.login({
-            username: "evan.tucker",
-            password: "password"
-        }).then(res => {
-            console.log(res.data);
-            if (res.data) {
-                this.setState({
-                    loggedIn: true
-                });
-            }
-        });
+        if (!this.state.loggedIn) {
+            API.isLoggedIn().then(res=> {
+                if (res.data.loggedIn) {
+                    this.setState({
+                        loggedIn: true
+                    });
+                }
+            }).catch(err => {
+                console.log(err);
+            });
+        }
+    }
+
+    componentDidUpdate() {
+        if (!this.state.loggedIn) {
+            API.isLoggedIn().then(res=> {
+                if (res.data.loggedIn) {
+                    this.setState({
+                        loggedIn: true
+                    });
+                }
+            }).catch(err => {
+                console.log(err);
+            });
+        }
     }
 
     loginMessage = ()=> {
@@ -38,16 +54,17 @@ class SignIn extends Component {
     render() {
         if (this.state.action === 'signup') {
             return (
-                <div>
-                    <h1>signin</h1>
-                </div>
+                <Container>
+                    <Login />
+                </Container>
             )
         } else {
             return (
-                <div>
+                <Container>
                     <h1>Login</h1>
+                    <Login />
                     <h2>{this.loginMessage()}</h2>
-                </div>
+                </Container>
             )
         }  
     }

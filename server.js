@@ -3,7 +3,6 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
-const colors = require('colors');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
@@ -11,6 +10,8 @@ const flash = require('connect-flash');
 const db = require('./controller/db.js');
 const passport = require('passport');
 const usersAPI = require('./routes/usersAPI');
+
+require('colors');
 
 require('./controller/passport')(passport);
 
@@ -43,9 +44,9 @@ app.listen(PORT, (err) => {
             if (error) {
                 return console.log('💥  the connection broke 💥'.red);
             } else {
-                console.log('✨  mongoose connection successful ✨'.cyan.bold);
+                console.log('✨  mongoose connection successful ✨'.america.bold);
             }
         });
-        console.log(`✨  app listening on port ${PORT} ✨`.magenta.bold);
+        console.log(`✨  app listening on port ${PORT} ✨`.rainbow.bold);
     }
 });
