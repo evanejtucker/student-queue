@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import Login from "../../components/Login";
 import LoginV1 from "../../components/Login-V1";
+import Signup from "../../components/Signup";
 import API from "../../utils/API";
 import { Container, Row, Col } from 'reactstrap';
 
@@ -11,8 +12,11 @@ class SignIn extends Component {
         this.state = {
             action: props.action,
             loggedIn: false,
+            firstname: "",
+            lastname: "",
             username: "",
-            password: ""
+            password: "",
+            email: ""
         };
     }
 
@@ -48,9 +52,17 @@ class SignIn extends Component {
 
     loginMessage = ()=> {
         if (this.state.loggedIn) {
-            return "you are already logged in"
+            return "you are logged in!"
         } else {
             return "you are not logged in"
+        }
+    }
+
+    signupMessage = ()=> {
+        if (this.state.loggedIn) {
+            return "you are signed up!"
+        } else {
+            return "you are not signed up"
         }
     }
 
@@ -61,7 +73,7 @@ class SignIn extends Component {
         });
     };
 
-    handleFormSubmit = event => {
+    handleLogin = event => {
         event.preventDefault();
         if (this.state.username && this.state.password) {
             API.login({
@@ -78,15 +90,44 @@ class SignIn extends Component {
             }).catch(err => console.log(err));
         }
     };
+
+    handleSignup = event => {
+        event.preventDefault();
+        if (this.state.firstname && this.state.lastname && this.state.username && this.state.password && this.state.email) {
+            API.login({
+                firstname: this.state.firstname,
+                lastname: this.state.lastname,
+                username: this.state.username,
+                password: this.state.password,
+                email: this.state.email
+            })
+            .then(res => {
+                if (res.data.loggedIn) {
+                    this.setState({
+                        loggedIn: true
+                    });
+                };
+                console.log('logged in!')
+            }).catch(err => console.log(err));
+        }
+    };
     
     render() {
         if (this.state.action === 'signup') {
             return (
                 <Container>
-                    <h1>Signup -- Under Construction</h1>
+                    <h1>Signup</h1>
                     {/* <Login /> */}
-                    <LoginV1  submit={this.handleFormSubmit} inputChange={this.handleInputChange} username={this.state.username} password={this.state.password}/>
-                    <h2>{this.loginMessage()}</h2>
+                    <Signup  
+                        submit={this.handleSignup} 
+                        inputChange={this.handleInputChange} 
+                        firstname={this.state.firstname} 
+                        lastname={this.state.lastname} 
+                        username={this.state.username} 
+                        password={this.state.password}
+                        email={this.state.email}
+                    />
+                    <h2>{this.signupMessage()}</h2>
                 </Container>
             )
         } else {
@@ -94,7 +135,11 @@ class SignIn extends Component {
                 <Container>
                     <h1>Login</h1>
                     {/* <Login /> */}
-                    <LoginV1  submit={this.handleFormSubmit} inputChange={this.handleInputChange} username={this.state.username} password={this.state.password}/>
+                    <LoginV1  
+                        submit={this.handleLogin} 
+                        inputChange={this.handleInputChange} 
+                        username={this.state.username} 
+                        password={this.state.password}/>
                     <h2>{this.loginMessage()}</h2>
                 </Container>
             )
